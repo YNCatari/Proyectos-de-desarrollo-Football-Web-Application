@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header">
+                    <div class="card-heading">
+                        <h3 class="card-title">Editar Jugador</h3>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <form action="/admin/player/update" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>DNI</label>
+                            <input th:value="${Player.Dni}" type="text" name="Dni" class="form-control dni-mask" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input th:value="${Player.Name}" type="text" name="Name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <input th:value="${Player.LastName}" type="text" name="LastName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Nacimiento</label>
+                            <div class="input-group date display-years" data-date-format="yyyy-mm-dd">
+                                <input th:value="${Player.DateBirth}" name="DateBirth" class="form-control" type="text" placeholder="yyyy-mm-dd" required>
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Foto</label>
+                            <input th:value="${Player.Photo}" type="text" name="Photo" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input th:value="${Player.Phone}" type="text" name="Phone" class="form-control phone-mask" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Correo electrónico</label>
+                            <input th:value="${Player.Email}" type="email" name="Email" class="form-control" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Altura</label>
+                                <input th:value="${Player.Height}" type="number" name="Height" class="form-control" step="any">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Peso</label>
+                                <input th:value="${Player.Weight}" type="number" name="Weight" class="form-control" step="any">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Pierna Hábil</label>
+                            <select name="Foot" class="form-control" required>
+                                <option value="Diestro" th:selected="${Player.Foot=='Diestro'}">Diestro</option>
+                                <option value="Zurdo" th:selected="${Player.Foot=='Zurdo'}">Zurdo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Posición</label>
+                            <select name="position.Id" class="form-control" required>
+                                <option th:each="Position : ${Positions}" th:value="${Position.Id}" value="1" th:text="${Position.Description}" th:selected="${Player.position.Id==Position.Id}">Centro Delantero</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select name="State" class="form-control" required>
+                                <option value="1" th:selected="${Player.State==1}">Activo</option>
+                                <option value="0" th:selected="${Player.State==0}">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input th:value="${Player.Id}" type="hidden" name="Id" required>
+                            <button type="submit" class="btn btn-primary text-uppercase">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container-fluid -->
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header">
+                    <div class="card-heading">
+                        <h3 class="card-title">Editar Usuario</h3>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <form action="/admin/user/update" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Usuario</label>
+                            <input th:value="${User.Username}" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Rol</label>
+                            <input th:value="${User.Role == 1 ? 'Administrador' : 'Equipo'}" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select name="State" class="form-control" required>
+                                <option value="1" th:selected="${User.State == 1}">Activo</option>
+                                <option value="0" th:selected="${User.State == 0}">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input th:value="${User.Id}" type="hidden" name="Id" required>
+                            <button type="submit" class="btn btn-primary text-uppercase">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container-fluid -->
+</html>

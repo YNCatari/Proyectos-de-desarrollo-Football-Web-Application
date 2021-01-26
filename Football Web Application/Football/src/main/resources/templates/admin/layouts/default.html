@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+    <head>
+        <title>Sistema de Liga de Fútbol - Pilcuyo</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="description" content="Sistema de Liga de Fútbol" />
+        <meta name="author" content="Luis Moreno" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- app favicon -->
+        <link rel="shortcut icon" href="/admin/assets/img/favicon.ico">
+        <!-- google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+        <!-- styles -->
+        <link rel="stylesheet" type="text/css" href="/admin/assets/css/vendors.css" />
+        <link rel="stylesheet" type="text/css" href="/admin/assets/css/style.css" />
+    </head>
+    <body>
+        <!-- begin app -->
+        <div class="app">
+            <!-- begin app-wrap -->
+            <div class="app-wrap">
+                <!-- begin pre-loader -->
+                <div class="loader">
+                    <div class="h-100 d-flex justify-content-center">
+                        <div class="align-self-center">
+                            <img src="/admin/assets/img/loader/loader.gif" alt="loader">
+                        </div>
+                    </div>
+                </div>
+                <!-- end pre-loader -->
+                <!-- begin app-header -->
+                <header class="app-header top-bar" th:replace="admin/fragments/header :: header"></header>
+                <!-- end app-header -->
+                <!-- begin app-container -->
+                <div class="app-container">
+                    <!-- begin app-nabar -->
+                    <aside class="app-navbar" th:replace="admin/fragments/aside :: aside"></aside>
+                    <!-- end app-nabar -->
+                    <!-- begin app-main -->
+                    <div class="app-main" id="main">
+                        <!-- begin container-fluid -->
+                        <div class="container-fluid" layout:fragment="content"></div>
+                        <!-- end container-fluid -->
+                    </div>
+                    <!-- end app-main -->
+                </div>
+                <!-- end app-container -->
+                <!-- begin footer -->
+                <footer class="footer">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 text-center text-sm-left">
+                            <p>&copy; Copyright 2019. Todos los derechos reservados.</p>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end footer -->
+            </div>
+            <!-- end app-wrap -->
+        </div>
+        <!-- end app -->
+        <!-- scripts -->
+        <script src="/admin/assets/js/vendors.js"></script>
+        <script src="/admin/assets/js/app.js"></script>
+        <script src="/admin/assets/js/jquery.mask.js"></script>
+        <script src="/admin/assets/js/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="/admin/assets/js/bootstrap-fileupload/bootstrap-fileupload.css" />
+        <script src="/admin/assets/js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+
+        <script>
+            function antecedentes(dataa,datab,datac)
+                    {
+                        // morris bar chart antecedentes
+                                                                var morrisantecedentes = jQuery("#morrisantecedentes");
+                                                                if (morrisantecedentes.length > 0) {
+                                                                    Morris.Bar({
+                                                                        element: morrisantecedentes,
+                                                                        data: [
+                                                                            { y: 'Antecedendes', a: dataa, b: datab, c: datac }
+                                                                        ],
+                                                                        xkey: 'y',
+                                                                        ykeys: ['a', 'b', 'c'],
+                                                                        labels: ['Equipo Local', 'Empates', 'Equipo Visitante'],
+                                                                        barColors: ['#4776E6', '#8E54E9', '#1AA15F'],
+                                                                        resize: true,
+                                                                        fillOpacity: 0.4,
+                                                                        padding: 15,
+                                                                        grid: false,
+                                                                        gridTextFamily: 'Roboto',
+                                                                        gridTextSize: 10
+                                                                    });
+                                                                }
+                    }
+
+        </script>
+        <script th:inline="javascript">
+            antecedentes([[${MatchesWinLocal}]],[[${MatchesAgainst}]],[[${MatchesWinVisitor}]]);
+        </script>
+    </body>
+</html>

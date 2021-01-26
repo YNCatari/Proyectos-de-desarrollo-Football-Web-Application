@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="team/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header">
+                    <div class="card-heading text-center">
+                        <h3 th:text="${Match.TeamLocal.FullName + ' vs ' + Match.TeamVisitor.FullName}" class="card-title">FC Barcelona vs Real Madrid</h3>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <!-- info -->
+                    <div class="row align-items-center">
+                        <div class="col-3 col-sm-4">
+                            <div class="text-center py-3">
+                                <img class="img-fluid" th:src="'/uploads/team/' + ${Match.TeamLocal.Logotype}" width="150px" src="/admin/assets/img/shield.png" alt="" title=""/>
+                                <div class="mt-4">
+                                    <h4 th:text="${Match.TeamLocal.NickName}" class="m-0 d-none d-md-block">FC Barcelona</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <div class="text-center">
+                                <div th:text="${Match.MatchDate}">12/11/2019</div>
+                                <div class="py-4">
+                                    <h1 class="match-score">0 - 0</h1>
+                                </div>
+                                <div th:text="${Match.MatchHour}">8:00</div>
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-4">
+                            <div class="text-center py-3">
+                                <img class="img-fluid" th:src="'/uploads/team/' + ${Match.TeamVisitor.Logotype}" width="150px" src="/admin/assets/img/shield.png" alt="" title=""/>
+                                <div class="mt-4">
+                                    <h4 th:text="${Match.TeamVisitor.NickName}" class="m-0 d-none d-md-block">Real Madrid</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- info -->
+                    <!-- tabs -->
+                    <div class="tab nav-border-bottom nav-center">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase active show" id="lineups-02-tab" data-toggle="tab" href="#lineups-02" role="tab" aria-controls="lineups-02" aria-selected="true">Alineaciones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase" id="statistics-02-tab" data-toggle="tab" href="#statistics-02" role="tab" aria-controls="statistics-02" aria-selected="false">Estadísticas</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade py-3 active show" id="lineups-02" role="tabpanel" aria-labelledby="lineups-02-tab">
+                                <div class="w-100" th:if="${Match.State == 0}">
+                                    <div class="py-3 text-center">
+                                        <button class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#AlignmentModal">Agregar</button>
+                                    </div>
+                                </div>
+                                <div class="w-100">
+                                    <div class="row">
+                                        <!-- col -->
+                                        <div class="col-xl-6 col-xxl-4 mb-30">
+                                            <div class="card card-statistics h-100 mb-0">
+                                                <div class="card-header d-flex justify-content-between">
+                                                    <div class="card-heading">
+                                                        <h4 class="card-title">Equipo Local</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <!-- titular -->
+                                                    <div class="row align-items-center m-b-20" th:each="MatchAlignment : ${teamLocalAlignment}" th:if="${MatchAlignment.Headline==1}">
+                                                        <div class="col-12 col-sm-9 my-3 mb-sm-0">
+                                                            <h4 class="mb-0" th:text="${MatchAlignment.player.Name}">Wilson Moreno</h4>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label class="badge badge-primary-inverse" th:text="${MatchAlignment.Headline==1 ? 'Titular':''}">Titular</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- suplente -->
+                                                    <div class="row align-items-center m-b-20" th:each="MatchAlignment : ${teamLocalAlignment}" th:if="${MatchAlignment.Headline==0}">
+                                                        <div class="col-12 col-sm-9 my-3 mb-sm-0">
+                                                            <h4 class="mb-0" th:text="${MatchAlignment.player.Name}">Wilson Moreno</h4>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label class="badge badge-primary-inverse" th:text="${MatchAlignment.Headline==1 ? 'Suplente':''}">Suplente</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- suplente -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- col -->
+                                        <div class="col-xl-6 col-xxl-4 mb-30">
+                                            <div class="card card-statistics h-100 mb-0">
+                                                <div class="card-header d-flex justify-content-between">
+                                                    <div class="card-heading">
+                                                        <h4 class="card-title">Equipo Visitante</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <!-- titular -->
+                                                    <div class="row align-items-center m-b-20" th:each="MatchAlignment : ${teamVisitorAlignment}" th:if="${MatchAlignment.Headline==1}">
+                                                        <div class="col-12 col-sm-9 my-3 mb-sm-0">
+                                                            <h4 class="mb-0" th:text="${MatchAlignment.player.Name}">Wilson Moreno</h4>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label class="badge badge-primary-inverse" th:text="${MatchAlignment.Headline==1 ? 'Titular':''}">Titular</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- suplente -->
+                                                    <div class="row align-items-center m-b-20" th:each="MatchAlignment : ${teamVisitorAlignment}" th:if="${MatchAlignment.Headline==0}">
+                                                        <div class="col-12 col-sm-9 my-3 mb-sm-0">
+                                                            <h4 class="mb-0" th:text="${MatchAlignment.player.Name}">Wilson Moreno</h4>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label class="badge badge-primary-inverse" th:text="${MatchAlignment.Headline==1 ? 'Suplente':''}">Suplente</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- suplente -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- col -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade py-3" id="statistics-02" role="tabpanel" aria-labelledby="statistics-02-tab">
+                                <div class="w-100">
+                                    Estadísticas
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tabs -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+    <!-- Alignment -->
+    <div class="modal fade" id="AlignmentModal" tabindex="-1" role="dialog" aria-labelledby="AlignmentModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Alineación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="w-100">
+                        <form action="/team/match-alignment/store" method="POST">
+                            <div class="form-group">
+                                <label>Jugador</label>
+                                <select name="player.Id" class="form-control" required>
+                                    <option value="">[Seleccione un Jugador]</option>
+                                    <th:block th:each="Template : ${TemplatePlayers}">
+                                        <option th:value="${Template.player.Id}" value="1" th:text="${Template.player.Name + ' ' + Template.player.LastName}">Luis Moreno</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Posición</label>
+                                <select name="position.Id" class="form-control" required>
+                                    <option value="">[Seleccione una Posición]</option>
+                                    <th:block th:each="Position : ${Positions}">
+                                        <option th:value="${Position.Id}" value="1" th:text="${Position.Description}">Delantero</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Condición</label>
+                                <select name="Headline" class="form-control" required>
+                                    <option value="1">Titular</option>
+                                    <option value="0">Suplente</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="match.Id" th:value="${Match.Id}" value="1" required />
+                                <input type="hidden" name="team.Id" th:value="${Team.Id}" value="1" required />
+                                <button type="submit" class="btn btn-primary text-uppercase">Agregar Alineación</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Alignment -->
+</div>
+<!-- end container-fluid -->
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header">
+                    <div class="card-heading">
+                        <h3 class="card-title">Estadios</h3>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <div class="datatable-wrapper table-responsive">
+                        <table id="datatable" class="display compact table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="text-center" width="30px">#</th>
+                                <th>Nombre</th>
+                                <th>Dirección</th>
+                                <th class="text-center" width="150">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="Stadium, state : ${Stadiums}">
+                                <td th:text="${state.index + 1}" class="text-center">1</td>
+                                <td th:text="${Stadium.Name}">Estadio Cachipucara</td>
+                                <td th:text="${Stadium.Address}">Ciudad Nueva, Tacna</td>
+                                <td class="text-center">
+                                    <a th:href="@{/admin/stadium/{id}/edit(id = ${Stadium.Id})}" class="btn btn-sm btn-icon btn-success" title="Editar"><i class="zmdi zmdi-edit"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container-fluid -->
+</html>

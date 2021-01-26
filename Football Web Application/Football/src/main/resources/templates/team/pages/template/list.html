@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="team/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header d-sm-flex justify-content-between align-items-center">
+                    <div class="card-heading">
+                        <h3 class="card-title">Mi Plantilla</h3>
+                        <p th:text="${Season.competition.Title} + ' ' + ${Season.Name}">Liga - 2019-2020</p>
+                    </div>
+                    <div class="dropdown py-2 py-lg-0">
+                        <button th:if="${Season.State == 1}" data-toggle="modal" data-target="#AddPlayerModal" class="btn btn-round btn-primary btn-sm text-uppercase">Agregar Jugador</button>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <div class="datatable-wrapper table-responsive">
+                        <table id="datatable" class="display compact table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="30px" class="text-center">#</th>
+                                <th>Nombres y Apellidos</th>
+                                <th>Posición</th>
+                                <th>Apodo</th>
+                                <th>Dorsal</th>
+                                <th class="text-center" width="150">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="Template, state : ${TemplatePlayers}">
+                                <td th:text="${state.index + 1}" class="text-center">1</td>
+                                <td th:text="${Template.player.Name + ' ' + Template.player.LastName}">Luis Angel Moreno</td>
+                                <td th:text="${Template.player.position.Description}">Delantero</td>
+                                <td th:text="${Template.Nickname}">Moreno</td>
+                                <td th:text="${Template.Dorsal}">9</td>
+                                <td class="text-center">
+                                    <a th:href="@{/team/template/{id}/delete/{season}(id = ${Template.Id}, season = ${Template.season.Id})}" class="btn btn-sm btn-icon btn-danger" title="Eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar?');"><i class="zmdi zmdi-delete"></i></a>
+                                    <a th:href="@{/team/template/{id}/edit(id = ${Template.Id})}" class="btn btn-sm btn-icon btn-success" title="Editar"><i class="zmdi zmdi-edit"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+    <!-- Add Player Modal -->
+    <div class="modal fade" id="AddPlayerModal" tabindex="-1" role="dialog" aria-labelledby="AddPlayerModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Jugador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal-body-select">
+                    <form action="/team/template/store" method="POST">
+                        <div class="form-group">
+                            <label>Jugador</label>
+                            <select class="form-control select-teams" name="player.Id" required>
+                                <option value="">[Seleccione un Jugador]</option>
+                                <option th:each="Player : ${Players}" th:value="${Player.Id}" value="1" th:text="${Player.Name}">Luis Moreno</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Apodo</label>
+                            <input type="text" class="form-control" name="Nickname" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Dorsal</label>
+                            <input type="text" class="form-control" name="Dorsal" required>
+                        </div>
+                        <div class="form-group">
+                            <input th:value="${Season.Id}" type="hidden" name="season.Id" required>
+                            <input th:value="${Team.Id}" type="hidden" name="team.Id" required>
+                            <button type="submit" class="btn btn-primary text-uppercase">Agregar Jugador</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Player Modal -->
+</div>
+<!-- end container-fluid -->
+</html>

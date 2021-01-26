@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header">
+                    <div class="card-heading">
+                        <h3 class="card-title">Editar Estadio</h3>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <form action="/admin/stadium/update" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input th:value="${Stadium.Name}" type="text" name="Name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input th:value="${Stadium.Address}" type="text" name="Address" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input th:value="${Stadium.Id}" type="hidden" name="Id" required>
+                            <button type="submit" class="btn btn-primary text-uppercase">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container-fluid -->
+</html>

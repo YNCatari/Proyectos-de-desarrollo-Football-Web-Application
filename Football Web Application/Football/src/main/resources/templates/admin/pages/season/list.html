@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header">
+                    <div class="card-heading">
+                        <h3 class="card-title">Temporadas</h3>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <div class="datatable-wrapper table-responsive">
+                        <table id="datatable" class="display compact table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="30px" class="text-center">#</th>
+                                <th>Temporada</th>
+                                <th>Competición</th>
+                                <th>Fecha de Inicio</th>
+                                <th>Fecha de Finalización</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center" width="150">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="Season, state : ${Seasons}" th:id="'season_' + ${Season.Id}">
+                                <td th:text="${state.index + 1}" class="text-center">1</td>
+                                <td th:text="${Season.Name}">2019</td>
+                                <td th:text="${Season.competition.Title}">Liga</td>
+                                <td th:text="${Season.StartDate}">04/03/2019</td>
+                                <td th:text="${Season.EndDate}">01/11/2019</td>
+                                <td class="text-center">
+                                    <a th:if="${Season.State == 0}" href="javascript:void(0);" class="btn btn-xs btn-round btn-warning">En Espera</a>
+                                    <a th:if="${Season.State == 1}" href="javascript:void(0);" class="btn btn-xs btn-round btn-primary">Iniciado</a>
+                                    <a th:if="${Season.State == 2}" href="javascript:void(0);" class="btn btn-xs btn-round btn-danger">Finalizado</a>
+                                </td>
+                                <td class="text-center">
+                                    <a th:href="@{/admin/season/{id}(id = ${Season.Id})}" class="btn btn-sm btn-icon btn-primary" title="Ver"><i class="zmdi zmdi-eye"></i></a>
+                                    <a th:if="${Season.State==0}" th:href="@{/admin/season/{id}/edit(id = ${Season.Id})}" class="btn btn-sm btn-icon btn-success" title="Editar"><i class="zmdi zmdi-edit"></i></a>
+                                    <button th:if="${Season.State==0}" th:rel="${Season.Id}" class="btn btn-sm btn-icon btn-danger sweetalert-season-delete" title="Eliminar"><i class="zmdi zmdi-delete"></i></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container-fluid -->
+</html>

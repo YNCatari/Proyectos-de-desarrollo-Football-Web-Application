@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header d-sm-flex justify-content-between align-items-center">
+                    <div class="card-heading">
+                        <h3 class="card-title" th:text="${Player.Name + ' ' + Player.LastName}">Luis Moreno</h3>
+                    </div>
+                    <div class="dropdown py-2 py-lg-0">
+                        <a th:if="${Player.State == 0}" href="javascript:void(0);" class="btn btn-round btn-danger btn-sm text-uppercase">Inactivo</a>
+                        <a th:if="${Player.State == 1}" href="javascript:void(0);" class="btn btn-round btn-primary btn-sm text-uppercase">Activo</a>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <!-- tabs -->
+                    <div class="tab tab-border">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase active show" id="information-10-tab" data-toggle="tab" href="#information-10" role="tab" aria-controls="information-10" aria-selected="true"> <i class="fa fa-address-card-o"></i>Datos Personales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase" id="trajectory-10-tab" data-toggle="tab" href="#trajectory-10" role="tab" aria-controls="trajectory-10" aria-selected="false"><i class="fa fa-bolt"></i>Trayectoria</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase" id="community-10-tab" data-toggle="tab" href="#community-10" role="tab" aria-controls="community-10" aria-selected="false"><i class="fa fa-group"></i>Comunidad</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- tab -->
+                            <div class="tab-pane fade active show" id="information-10" role="tabpanel" aria-labelledby="information-10-tab">
+                                <div class="w-100">
+                                    <div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label>Documento Nacional de Identidad (DNI)</label>
+                                                <input type="text" class="form-control" placeholder="DNI" th:value="${Player.Dni}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Nombre</label>
+                                                <input type="text" class="form-control" placeholder="Nombre" th:value="${Player.Name}" readonly>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Apellido</label>
+                                                <input type="text" class="form-control" placeholder="Apellido" th:value="${Player.LastName}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Fecha de Nacimiento</label>
+                                            <input type="text" class="form-control" placeholder="Fecha de Nacimiento" th:value="${Player.DateBirth}" readonly>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Teléfono</label>
+                                                <input type="text" class="form-control" placeholder="Teléfono" th:value="${Player.Phone}" readonly>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Correo electrónico</label>
+                                                <input type="text" class="form-control" placeholder="Correo electrónico" th:value="${Player.Email}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Altura</label>
+                                                <input type="text" class="form-control" placeholder="Altura" th:value="${Player.Height}" readonly>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Peso</label>
+                                                <input type="text" class="form-control" placeholder="Peso" th:value="${Player.Weight}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Pie Hábil</label>
+                                                <input type="text" class="form-control" placeholder="Pie Hábil" th:value="${Player.Foot}" readonly>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Posición</label>
+                                                <input type="text" class="form-control" placeholder="Posición" th:value="${Player.Position.Description}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- tab -->
+                            <div class="tab-pane fade" id="trajectory-10" role="tabpanel" aria-labelledby="trajectory-10-tab">
+                                <div class="w-100">
+                                </div>
+                            </div>
+                            <!-- tab -->
+                            <div class="tab-pane fade" id="community-10" role="tabpanel" aria-labelledby="community-10-tab">
+                                <div class="w-100 widget-income-list">
+                                    <div class="card-body d-flex align-itemes-center" th:each="CommunityPlayer : ${CommunitiesPlayer}">
+                                        <div class="media align-items-center w-100">
+                                            <div class="text-left">
+                                                <h3 class="mb-0" th:text="${CommunityPlayer.Community.Name}">Comunidad I</h3>
+                                            </div>
+                                            <div class="img-icon ml-auto">
+                                                <a th:href="@{/admin/community-player/{id}/{player}/delete(id = ${CommunityPlayer.Id}, player = ${Player.Id})}"><i class="zmdi zmdi-delete"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="mt-4 text-center">
+                                    <button class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#AddCommunity">Agregar Nuevo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tabs -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+    <!-- Add Community Modal -->
+    <div class="modal fade" id="AddCommunity" tabindex="-1" role="dialog" aria-labelledby="AddCommunity" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Comunidad</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/community-player/store" method="POST">
+                        <div class="form-group">
+                            <select class="form-control" name="Community.id" required>
+                                <option value="">[Seleccione una Comunidad]</option>
+                                <option th:each="Community : ${Communities}" th:value="${Community.Id}" value="1" th:text="${Community.Name}">Comunidad I</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input th:value="${Player.Id}" type="hidden" name="Player.id" required>
+                            <button type="submit" class="btn btn-primary text-uppercase w-100">Agregar Comunidad</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Community Modal -->
+</div>
+<!-- end container-fluid -->
+</html>

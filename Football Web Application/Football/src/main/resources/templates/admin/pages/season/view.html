@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header d-sm-flex justify-content-between align-items-center">
+                    <div class="card-heading">
+                        <h3 class="card-title" th:text="${Season.competition.Title + ' - ' + Season.Name}">Liga 2019-2019</h3>
+                        <p th:text="${Season.StartDate + ' al ' + Season.EndDate}">2019-11-16 al 2019-11-25</p>
+                    </div>
+                    <div class="dropdown py-2 py-lg-0">
+                        <a th:if="${Season.State == 0}" href="javascript:void(0);" class="btn btn-round btn-warning btn-sm text-uppercase">En Espera</a>
+                        <a th:if="${Season.State == 1}" href="javascript:void(0);" class="btn btn-round btn-primary btn-sm text-uppercase">Iniciado</a>
+                        <a th:if="${Season.State == 2}" href="javascript:void(0);" class="btn btn-round btn-danger btn-sm text-uppercase">Finalizado</a>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <!-- tabs -->
+                    <div class="tab tab-border">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase active show" id="teams-10-tab" data-toggle="tab" href="#teams-10" role="tab" aria-controls="teams-10" aria-selected="true"> <i class="fa fa-star"></i>Equipos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase" id="matches-10-tab" data-toggle="tab" href="#matches-10" role="tab" aria-controls="matches-10" aria-selected="false"><i class="fa fa-soccer-ball-o"></i>Partidos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase" id="classifications-10-tab" data-toggle="tab" href="#classifications-10" role="tab" aria-controls="classifications-10" aria-selected="false"><i class="fa fa-table"></i>Clasificación</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase" id="statistics-10-tab" data-toggle="tab" href="#statistics-10" role="tab" aria-controls="statistics-10" aria-selected="false"><i class="fa fa-pie-chart"></i>Estadísticas</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- tab -->
+                            <div class="tab-pane fade active show" id="teams-10" role="tabpanel" aria-labelledby="teams-10-tab">
+                                <!-- head -->
+                                <div class="py-2 text-right" th:if="${Season.State==0}">
+                                    <button class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#AddTeamModal">Agregar</button>
+                                </div>
+                                <!-- teams -->
+                                <div class="pt-4">
+                                    <!-- row -->
+                                    <div class="row">
+                                        <th:block th:each="SeasonTeam : ${SeasonTeams}">
+                                        <!-- col -->
+                                        <div class="col-sm-6 col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
+                                            <div class="card card-statistics widget-social-box2 px-2 mb-0 w-100">
+                                                <div class="card-body pb-4 pt-4">
+                                                    <div class="text-center">
+                                                        <div class="pt-1 m-auto"><img th:src="'/uploads/team/' + ${SeasonTeam.team.Logotype}" width="100px" class="img-fluid" src="/admin/assets/img/shield.png" alt=""></div>
+                                                        <div class="mt-3 employees-contant-inner">
+                                                            <h4 class="mb-1" th:text="${SeasonTeam.team.FullName}">Fútbol Club Conapi Sumariri</h4>
+                                                            <p class="mb-0 text-muted"><a href="javascript:void(0)" th:text="${SeasonTeam.team.Email}">conpi-sumariri@gmail.com</a></p>
+                                                            <div class="row justify-content-center align-items-center border-top pt-4 mt-3 d-none">
+                                                                <div class="col-12">
+                                                                    <a href="javascript:void(0)" class="d-flex align-items-center justify-content-center"><i class="ti ti-comment mr-2"></i><span>Quitar</span></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- col -->
+                                        </th:block>
+                                    </div>
+                                    <!-- row -->
+                                    <div class="py-3 text-center m-auto" th:if="${SeasonTeams.isEmpty()}">
+                                        <div class="alert border-0 alert-primary bg-gradient alert-dismissible fade show border-radius-none w-100" role="alert">
+                                            <strong>No hay equipos registrados para esta temporada.</strong> Para registrar un equipo haga clic en el botón Agregar
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <i class="ti ti-close"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="pt-4" th:if="${SeasonTeams.size()>=2 and Season.State==0}">
+                                        <button class="btn btn-block btn-primary text-uppercase" data-toggle="modal" data-target="#SelectStadiumModal">Generar Fixture</button>
+                                    </div>
+                                </div>
+                                <!-- teams -->
+                            </div>
+                            <!-- tab -->
+                            <div class="tab-pane fade" id="matches-10" role="tabpanel" aria-labelledby="matches-10-tab">
+                                <div class="w-100 pt-3" th:each="i : ${#numbers.sequence(1, (SeasonTeams.size()-1), 1)}">
+                                    <div class="w-100">
+                                        <h5 class="m-0" th:text="${'Jornada de ' + i + ' de ' + (SeasonTeams.size()-1)}">Jornada 13 de 28</h5>
+                                        <hr class="mt-1">
+                                    </div>
+                                    <!-- begin row -->
+                                    <div class="row">
+                                        <th:block th:each="Match : ${SeasonMatches}">
+                                        <!-- col -->
+                                        <div class="col-lg-6 col-xxl-3 m-b-30" th:if="${Match.MatchRound==i}">
+                                            <div class="card card-statistics h-100 mb-0">
+                                                <a th:href="@{/admin/match/{id}(id = ${Match.Id})}">
+                                                    <div class="card-body py-3 px-2">
+                                                        <div class="d-sm-flex justify-content-between align-items-center">
+                                                            <div class="w-100 w-lg-40 mr-auto">
+                                                                <div class="text-center">
+                                                                    <img width="65px" th:src="'/uploads/team/' + ${Match.TeamLocal.Logotype}" class="img-fluid" src="/admin/assets/img/shield.png" alt="" title=""/>
+                                                                    <span class="d-block mt-3 font-bold" th:text="${Match.TeamLocal.FullName}">Fútbol Club Barcelona</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-auto text-center">
+                                                                <div class="py-lg-0 py-3">
+                                                                    <span th:text="${Match.MatchDate}" class="d-block" style="white-space: nowrap">11/11/2019</span>
+                                                                    <h3 th:if="${Match.State==0}" class="m-0 py-2">- : -</h3>
+                                                                    <h3 th:if="${Match.State!=0}" class="m-0 py-2" th:text="${Match.GoalLocal + ' : ' + Match.GoalVisitor}">1 : 1</h3>
+                                                                    <span th:if="${Match.State==0}" th:text="${Match.MatchHour}" class="d-block">08:00</span>
+                                                                    <span th:if="${Match.State==1}" class="d-block">Finalizado</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-100 w-lg-40 ml-auto">
+                                                                <div class="text-center">
+                                                                    <img width="65px" th:src="'/uploads/team/' + ${Match.TeamVisitor.Logotype}" class="img-fluid" src="/admin/assets/img/shield.png" alt="" title=""/>
+                                                                    <span class="d-block mt-3 font-bold" th:text="${Match.TeamVisitor.FullName}">Real Sociedad</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!-- col -->
+                                        </th:block>
+                                    </div>
+                                    <!-- end row -->
+                                </div>
+                            </div>
+                            <!-- tab -->
+                            <div class="tab-pane fade" id="classifications-10" role="tabpanel" aria-labelledby="classifications-10-tab">
+                                <div class="w-100 pt-3">
+                                    <!-- table -->
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col" class="text-center">#</th>
+                                                <th scope="col">Equipo</th>
+                                                <th scope="col" class="text-center">Puntos</th>
+                                                <th scope="col" class="text-center">PJ</th>
+                                                <th scope="col" class="text-center">PG</th>
+                                                <th scope="col" class="text-center">PE</th>
+                                                <th scope="col" class="text-center">PP</th>
+                                                <th scope="col" class="text-center">GF</th>
+                                                <th scope="col" class="text-center">GC</th>
+                                                <th scope="col" class="text-center">DG</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="Classification, status : ${SeasonClassifications}">
+                                                <th scope="row" th:text="${status.index+1}" class="text-center">1</th>
+                                                <td th:text="${Classification.team.NickName}">Barcelona</td>
+                                                <td th:text="${Classification.Points}" class="text-center">3</td>
+                                                <td th:text="${Classification.MatchesPlayed}" class="text-center">1</td>
+                                                <td th:text="${Classification.MatchesWin}" class="text-center">1</td>
+                                                <td th:text="${Classification.MatchesTied}" class="text-center">0</td>
+                                                <td th:text="${Classification.MatchesLost}" class="text-center">0</td>
+                                                <td th:text="${Classification.GoalsFavor}" class="text-center">1</td>
+                                                <td th:text="${Classification.GoalsAgainst}" class="text-center">0</td>
+                                                <td th:text="${Classification.GoalsDifference}" class="text-center">0</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- table -->
+                                </div>
+                            </div>
+                            <!-- tab -->
+                            <div class="tab-pane fade" id="statistics-10" role="tabpanel" aria-labelledby="statistics-10-tab">
+                                <p>Statistics</p>
+                            </div>
+                            <!-- tab -->
+                        </div>
+                    </div>
+                    <!-- tabs -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+    <!-- Add Team Modal -->
+    <div class="modal fade" id="AddTeamModal" tabindex="-1" role="dialog" aria-labelledby="AddTeamModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Equipo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal-body-select">
+                    <form action="/admin/season-team/store" method="POST">
+                        <div class="form-group">
+                            <select class="form-control select-teams" name="id_team" required>
+                                <option value="">[Seleccione un Equipo]</option>
+                                <option th:each="Team : ${Teams}" th:value="${Team.Id}" value="1" th:text="${Team.FullName}">Fútbol Club Conapi Sumariri</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input th:value="${Season.Id}" type="hidden" name="id_season" required>
+                            <button type="submit" class="btn btn-primary text-uppercase">Agregar Equipo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Team Modal -->
+    <!-- Select Stadium Modal -->
+    <div class="modal fade" id="SelectStadiumModal" tabindex="-1" role="dialog" aria-labelledby="SelectStadiumModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Seleccionar Estadio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/match/generate-fixture" method="POST">
+                        <div class="form-group">
+                            <select class="form-control" name="id_stadium" required>
+                                <option value="">[Seleccione un Estadio]</option>
+                                <option th:each="Stadium : ${Stadiums}" th:value="${Stadium.Id}" value="1" th:text="${Stadium.Name}">Estadio Cachipucara</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input th:value="${Season.Id}" type="hidden" name="id_season" required>
+                            <button type="submit" class="btn btn-primary text-uppercase w-100">Seleccionar y Generar Partidos</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Select Stadium Modal -->
+</div>
+<!-- end container-fluid -->
+</html>

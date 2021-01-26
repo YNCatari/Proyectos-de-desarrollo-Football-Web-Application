@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <!-- begin row -->
+    <div class="row" th:if="${Match.State==0}">
+        <div class="col-md-12 mb-3">
+            <!-- begin page title -->
+            <div class="d-block d-lg-flex flex-nowrap align-items-center">
+                <div class="ml-auto d-flex align-items-center secondary-menu text-center">
+                    <a href="#" data-toggle="modal" data-target="#LocalResultsModal" title="Equipo Local">
+                        <i class="zmdi zmdi-receipt btn btn-icon text-success"> L</i>
+                    </a>
+                    <a href="#" data-toggle="modal" data-target="#VisitorResultsModal" title="Equipo Visitante">
+                        <i class="zmdi zmdi-receipt btn btn-icon text-success"> V</i>
+                    </a>
+                    <a href="#" data-toggle="modal" data-target="#MatchUpdateModal" title="Actualizar">
+                        <i class="zmdi zmdi-refresh btn btn-icon text-primary"></i>
+                    </a>
+                    <a th:href="${Match.Id}" href="1" class="tooltip-wrapper sweetalert-match-finally" data-toggle="tooltip" data-placement="top" title="" data-original-title="Finalizar Partido">
+                        <i class="zmdi zmdi-badge-check btn btn-icon text-danger"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- end page title -->
+        </div>
+    </div>
+    <!-- end row -->
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header">
+                    <div class="card-heading text-center">
+                        <h3 th:text="${Match.TeamLocal.FullName + ' vs ' + Match.TeamVisitor.FullName}" class="card-title">FC Barcelona vs Real Madrid</h3>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <!-- info -->
+                    <div class="row align-items-center">
+                        <div class="col-3 col-sm-4">
+                            <div class="text-center py-3">
+                                <img class="img-fluid" th:src="'/uploads/team/' + ${Match.TeamLocal.Logotype}" width="150px" src="/admin/assets/img/shield.png" alt="" title=""/>
+                                <div class="mt-4">
+                                    <h4 th:text="${Match.TeamLocal.NickName}" class="m-0 d-none d-md-block">FC Barcelona</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <div class="text-center">
+                                <div th:text="${Match.MatchDate}">12/11/2019</div>
+                                <div class="py-4">
+                                    <h1 class="match-score" th:text="${Match.GoalLocal + ' - ' + Match.GoalVisitor}">0 - 0</h1>
+                                </div>
+                                <div th:if="${Match.State==0}" th:text="${Match.MatchHour}">8:00</div>
+                                <div th:if="${Match.State==1}">Finalizado</div>
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-4">
+                            <div class="text-center py-3">
+                                <img class="img-fluid" th:src="'/uploads/team/' + ${Match.TeamVisitor.Logotype}" width="150px" src="/admin/assets/img/shield.png" alt="" title=""/>
+                                <div class="mt-4">
+                                    <h4 th:text="${Match.TeamVisitor.NickName}" class="m-0 d-none d-md-block">Real Madrid</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- info -->
+                    <!-- tabs -->
+                    <div class="tab nav-border-bottom nav-center">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase active show" id="lineups-02-tab" data-toggle="tab" href="#lineups-02" role="tab" aria-controls="lineups-02" aria-selected="true">Alineaciones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase" id="results-02-tab" data-toggle="tab" href="#results-02" role="tab" aria-controls="results-02" aria-selected="false">Resultados</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade py-3 active show" id="lineups-02" role="tabpanel" aria-labelledby="lineups-02-tab">
+                                <div class="w-100">
+                                    <div class="row">
+                                        <!-- col -->
+                                        <div class="col-xl-6 col-xxl-4 mb-30">
+                                            <div class="card card-statistics h-100 mb-0">
+                                                <div class="card-header d-flex justify-content-between">
+                                                    <div class="card-heading">
+                                                        <h4 class="card-title">Equipo Local</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <!-- titular -->
+                                                    <div class="row align-items-center m-b-20" th:each="MatchAlignment : ${teamLocalAlignment}" th:if="${MatchAlignment.Headline==1}">
+                                                        <div class="col-12 col-sm-9 my-3 mb-sm-0">
+                                                            <h4 class="mb-0" th:text="${MatchAlignment.player.Name}">Wilson Moreno</h4>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label class="badge badge-primary-inverse" th:text="${MatchAlignment.Headline==1 ? 'Titular':''}">Titular</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- suplente -->
+                                                    <div class="row align-items-center m-b-20" th:each="MatchAlignment : ${teamLocalAlignment}" th:if="${MatchAlignment.Headline==0}">
+                                                        <div class="col-12 col-sm-9 my-3 mb-sm-0">
+                                                            <h4 class="mb-0" th:text="${MatchAlignment.player.Name}">Wilson Moreno</h4>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label class="badge badge-primary-inverse" th:text="${MatchAlignment.Headline==1 ? 'Suplente':''}">Suplente</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- suplente -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- col -->
+                                        <div class="col-xl-6 col-xxl-4 mb-30">
+                                            <div class="card card-statistics h-100 mb-0">
+                                                <div class="card-header d-flex justify-content-between">
+                                                    <div class="card-heading">
+                                                        <h4 class="card-title">Equipo Visitante</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <!-- titular -->
+                                                    <div class="row align-items-center m-b-20" th:each="MatchAlignment : ${teamVisitorAlignment}" th:if="${MatchAlignment.Headline==1}">
+                                                        <div class="col-12 col-sm-9 my-3 mb-sm-0">
+                                                            <h4 class="mb-0" th:text="${MatchAlignment.player.Name}">Wilson Moreno</h4>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label class="badge badge-primary-inverse" th:text="${MatchAlignment.Headline==1 ? 'Titular':''}">Titular</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- suplente -->
+                                                    <div class="row align-items-center m-b-20" th:each="MatchAlignment : ${teamVisitorAlignment}" th:if="${MatchAlignment.Headline==0}">
+                                                        <div class="col-12 col-sm-9 my-3 mb-sm-0">
+                                                            <h4 class="mb-0" th:text="${MatchAlignment.player.Name}">Wilson Moreno</h4>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label class="badge badge-primary-inverse" th:text="${MatchAlignment.Headline==1 ? 'Suplente':''}">Suplente</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- suplente -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- col -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade py-3" id="results-02" role="tabpanel" aria-labelledby="results-02-tab">
+                                <div class="w-100">
+                                    <!-- table -->
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col" class="text-center">#</th>
+                                                <th scope="col">Equipo</th>
+                                                <th scope="col">Jugador</th>
+                                                <th scope="col" class="text-center">Resultado</th>
+                                                <th scope="col" class="text-center">Minuto</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="MatchResult, status : ${MatchResults}">
+                                                <th scope="row" th:text="${status.index+1}" class="text-center">1</th>
+                                                <td th:text="${MatchResult.team.FullName}">FC Barcelona</td>
+                                                <td th:text="${MatchResult.player.Name}">Luis Morneo</td>
+                                                <td th:text="${MatchResult.typeResult.Description}" class="text-center">Gol</td>
+                                                <td th:text="${MatchResult.MatchMinute}" class="text-center">9</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- table -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tabs -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <!-- row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header">
+                    <div class="card-heading text-center">
+                        <h3 class="card-title">Antecedentes</h3>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <div class="morris-wrapper">
+                        <div id="morrisantecedentes"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <!-- Local Results -->
+    <div class="modal fade" id="LocalResultsModal" tabindex="-1" role="dialog" aria-labelledby="LocalResultsModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Resultados del Equipo Local</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="w-100">
+                        <form  action="/admin/match-result/store" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Jugador</label>
+                                <select name="player.Id" class="form-control" required>
+                                    <option value="">[Seleccione un Jugador]</option>
+                                    <th:block th:each="MatchAlignment : ${teamLocalAlignment}">
+                                        <option th:value="${MatchAlignment.player.Id}" value="1" th:text="${MatchAlignment.player.Name}">Luis Moreno</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo de Resultado</label>
+                                <select name="typeResult.Id" class="form-control" required>
+                                    <option value="">[Seleccione Tipo de Resultado]</option>
+                                    <th:block th:each="TypeResult : ${TypeResults}">
+                                        <option th:value="${TypeResult.Id}" value="1" th:text="${TypeResult.Description}">GOL</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Minuto</label>
+                                <input type="number" name="MatchMinute" min="1" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="match.Id" th:value="${Match.Id}" required />
+                                <input type="hidden" name="team.Id" th:value="${Match.TeamLocal.Id}" required />
+                                <button type="submit" class="btn btn-primary text-uppercase">Registrar Resultado</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Local Results -->
+    <!-- Visitor Results -->
+    <div class="modal fade" id="VisitorResultsModal" tabindex="-1" role="dialog" aria-labelledby="VisitorResultsModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Resultados del Equipo Visitante</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="w-100">
+                        <form  action="/admin/match-result/store" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Jugador</label>
+                                <select name="player.Id" class="form-control" required>
+                                    <option value="">[Seleccione un Jugador]</option>
+                                    <th:block th:each="MatchAlignment : ${teamVisitorAlignment}">
+                                        <option th:value="${MatchAlignment.player.Id}" value="1" th:text="${MatchAlignment.player.Name}">Luis Moreno</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo de Resultado</label>
+                                <select name="typeResult.Id" class="form-control" required>
+                                    <option value="">[Seleccione Tipo de Resultado]</option>
+                                    <th:block th:each="TypeResult : ${TypeResults}">
+                                        <option th:value="${TypeResult.Id}" value="1" th:text="${TypeResult.Description}">GOL</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Minuto</label>
+                                <input type="number" name="MatchMinute" min="1" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="match.Id" th:value="${Match.Id}" required />
+                                <input type="hidden" name="team.Id" th:value="${Match.TeamVisitor.Id}" required />
+                                <button type="submit" class="btn btn-primary text-uppercase">Registrar Resultado</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Visitor Results -->
+    <!-- Match Update Modal -->
+    <div class="modal fade" id="MatchUpdateModal" tabindex="-1" role="dialog" aria-labelledby="MatchUpdateModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualizar el Partido</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/match/update" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Estadio</label>
+                            <select name="stadium.Id" class="form-control" required>
+                                <option value="">[Seleccione un Estadio]</option>
+                                <th:block th:each="Stadium : ${Stadiums}">
+                                <option th:value="${Stadium.Id}" value="1" th:text="${Stadium.Name}" th:selected="${Match.stadium.Id==Stadium.Id}">Estadio La Bombonera</option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Hora del Partido</label>
+                                <input th:value="${Match.MatchHour}" name="MatchHour" class="form-control time-mask" type="text" required />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Fecha del Partido</label>
+                                <div class="input-group date display-years" data-date-format="yyyy-mm-dd">
+                                    <input th:value="${Match.MatchDate}" name="MatchDate" class="form-control" type="text" placeholder="yyyy-mm-dd" required />
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group pt-3">
+                            <input type="hidden" name="season.Id" th:value="${Match.season.Id}" value="1" required />
+                            <input type="hidden" name="Id" th:value="${Match.Id}" value="1" required />
+                            <button type="submit" id="btn-d" class="btn btn-primary text-uppercase">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end Match Update modal -->
+</div>
+<!-- end container-fluid -->
+</html>

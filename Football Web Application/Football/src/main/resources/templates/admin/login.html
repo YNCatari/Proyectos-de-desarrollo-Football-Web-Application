@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Sistema de Liga de Fútbol - Pilcuyo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Sistema de Liga de Fútbol" />
+    <meta name="author" content="Luis Moreno" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- app favicon -->
+    <link rel="shortcut icon" href="/admin/assets/img/favicon.ico">
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <!-- plugin stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/vendors.css" />
+    <!-- app style -->
+    <link rel="stylesheet" type="text/css" href="/admin/assets/css/style.css" />
+</head>
+<body class="bg-white">
+    <!-- begin app -->
+    <div class="app">
+        <!-- begin app-wrap -->
+        <div class="app-wrap">
+            <!-- begin pre-loader -->
+            <div class="loader">
+                <div class="h-100 d-flex justify-content-center">
+                    <div class="align-self-center">
+                        <img src="/admin/assets/img/loader/loader.gif" alt="loader">
+                    </div>
+                </div>
+            </div>
+            <!-- end pre-loader -->
+            <!--start login contant-->
+            <div class="app-contant">
+                <div class="bg-white">
+                    <div class="container-fluid p-0">
+                        <div class="row no-gutters">
+                            <div class="col-sm-6 col-lg-5 col-xxl-3  align-self-center order-2 order-sm-1">
+                                <div class="d-flex align-items-center h-100-vh">
+                                    <div class="login p-50">
+                                        <div class="text-center pb-4">
+                                            <img class="img-fluid" src="/admin/assets/img/bg/logo.png" alt="">
+                                        </div>
+                                        <form action="/login" method="POST" class="mt-3 mt-sm-5">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Correo electrónico *</label>
+                                                        <input type="email" name="username" class="form-control" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Contraseña *</label>
+                                                        <input type="password" name="password"  class="form-control" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mt-3">
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-primary text-uppercase">Iniciar Sesión</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <style>
+                                .bg-cover-login{
+                                    background: url(/admin/assets/img/bg/bg-login.jpg) !important;
+                                    background-repeat: no-repeat;
+                                    background-size: cover !important;
+                                }
+                            </style>
+                            <div class="col-sm-6 col-xxl-9 col-lg-7 bg-gradient o-hidden order-1 order-sm-2 bg-cover-login">
+                                <div class="row align-items-center h-100">
+                                    <div class="col-7 mx-auto"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end login contant-->
+        </div>
+        <!-- end app-wrap -->
+    </div>
+    <!-- end app -->
+    <!-- scripts -->
+    <script src="/admin/assets/js/vendors.js"></script>
+    <script src="/admin/assets/js/app.js"></script>
+</body>
+</html>

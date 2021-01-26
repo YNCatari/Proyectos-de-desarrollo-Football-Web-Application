@@ -1,0 +1,20 @@
+===========================
+HERRAMIENTAS A USAR
+===========================
+=> IntelliJ IDEA
+=> O cualquier IDE que acepte MAVEN
+------------------------------------
+PARA COMENZAR
+
+CREAR LA BASE DE DATOS CON EL NOMBRE DE 
+dbfootball
+
+IMPORTAR LOS SCRIPTS EN ORDEN A LA BASE DE DATOS CREADA
+1. dbfootball-script-v2
+2. dbfootball_sp-v2
+3. dbfootball_data-v2
+
+=================================
+
+VERSION DE JDK JAVA 1.8
+Java version 1.8.0_221

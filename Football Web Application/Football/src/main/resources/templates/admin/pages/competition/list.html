@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="admin/layouts/default">
+<!-- begin container-fluid -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-statistics">
+                <!-- begin page title -->
+                <div class="card-header">
+                    <div class="card-heading">
+                        <h3 class="card-title">Competiciones</h3>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="card-body">
+                    <div class="datatable-wrapper table-responsive">
+                        <table id="datatable" class="display compact table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="30px" class="text-center">#</th>
+                                <th>Título</th>
+                                <th class="text-center" width="150">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="Competition, state : ${Competitions}">
+                                <td th:text="${state.index + 1}" class="text-center">1</td>
+                                <td th:text="${Competition.Title}">Liga</td>
+                                <td class="text-center">
+                                    <a th:href="@{/admin/competition/{id}/edit(id = ${Competition.Id})}" class="btn btn-sm btn-icon btn-success" title="Editar"><i class="zmdi zmdi-edit"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<!-- end container-fluid -->
+</html>
